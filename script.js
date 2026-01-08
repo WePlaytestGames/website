@@ -65,7 +65,63 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Form Submissions
+    // Form Submissions via Formspree
+    function showSuccessMessage(form, successMessage) {
+        const modalContent = form.closest('.modal-content');
+        modalContent.innerHTML = `
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="success-message">
+                <svg class="success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3>Success!</h3>
+                <p>${successMessage}</p>
+                <button class="cta-button-solid close-success-btn">CLOSE</button>
+            </div>
+        `;
+
+        // Re-attach close handlers
+        modalContent.querySelector('.modal-close').addEventListener('click', closeAllModals);
+        modalContent.querySelector('.close-success-btn').addEventListener('click', closeAllModals);
+    }
+
+    async function handleFormSubmit(form, successMessage) {
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                showSuccessMessage(form, successMessage);
+            } else {
+                const data = await response.json();
+                if (data.errors) {
+                    alert('Error: ' + data.errors.map(e => e.message).join(', '));
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            alert('Network error. Please check your connection and try again.');
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    }
+
     const streamForm = document.getElementById('stream-form');
     const bookForm = document.getElementById('book-form');
     const testerForm = document.getElementById('tester-form');
@@ -73,45 +129,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if (streamForm) {
         streamForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-
-            // Here you would typically send this to your backend
-            console.log('Stream Request:', data);
-
-            alert('Thank you for your request! We\'ll be in touch soon about scheduling your free streamed playtest.');
-            closeAllModals();
-            this.reset();
+            handleFormSubmit(this, 'Thank you for your request! We\'ll let you know when your free streamed playtest is scheduled.');
         });
     }
 
     if (bookForm) {
         bookForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-
-            // Here you would typically redirect to a payment flow (Stripe/Calendly)
-            console.log('Booking Request:', data);
-
-            alert('Thank you! You\'ll be redirected to complete your booking and payment shortly.\n\n(Payment integration coming soon!)');
-            closeAllModals();
-            this.reset();
+            handleFormSubmit(this, 'Thank you! We\'ll be in touch soon to complete your booking.');
         });
     }
 
     if (testerForm) {
         testerForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-
-            // Here you would typically send this to your backend
-            console.log('Tester Application:', data);
-
-            alert('Thank you for applying! We\'ll review your application and be in touch soon.');
-            closeAllModals();
-            this.reset();
+            handleFormSubmit(this, 'Thank you for applying! We\'ll review your application and be in touch soon.');
         });
     }
 

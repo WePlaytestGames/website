@@ -72,7 +72,7 @@
                     <h3 class="card-title">FREE STREAMED PLAYTEST</h3>
                     <p class="card-body">Want your game playtested live on stream? We'll play it for 30 minutes and post the VOD to YouTube for public visibility.</p>
                     <p class="card-benefit">Get quick, surface-level impressions and free marketing exposure.</p>
-                    <a class="cta-button-outline" data-modal="stream-modal" href="https://forms.gle/tt8SqMbwcEkXZfq5A">REQUEST FREE STREAM</a>
+                    <button class="cta-button-outline" data-modal="stream-modal">REQUEST FREE STREAM</button>
                 </div>
 
                 <!-- Column 2: Private (Featured) -->
@@ -94,7 +94,7 @@
                         <li>Completely private and confidential</li>
                     </ul>
                     <p class="card-price">Only $20/hr.</p>
-                    <a class="cta-button-solid" data-modal="book-modal" href="https://forms.gle/gmADLtQmbcNyVv238">BOOK PRIVATE TEST</a>
+                    <button class="cta-button-solid" data-modal="book-modal">BOOK PRIVATE TEST</button>
                 </div>
 
                 <!-- Column 3: Become a Tester -->
@@ -110,7 +110,7 @@
                     <h3 class="card-title">BECOME A TESTER</h3>
                     <p class="card-body">Want to get paid to playtest unreleased indie games?</p>
                     <p class="card-benefit">Earn money playing new games and helping developers shape their vision.</p>
-                    <a class="cta-button-outline" data-modal="tester-modal" href="https://forms.gle/8purNP65KML96Lfm7">APPLY TO TEST</a>
+                    <button class="cta-button-outline" data-modal="tester-modal">APPLY TO TEST</button>
                 </div>
             </div>
         </div>
@@ -152,20 +152,28 @@
             <button class="modal-close" aria-label="Close modal">&times;</button>
             <h3>Request Free Streamed Playtest</h3>
             <p>Fill out the form below and we'll get back to you about scheduling your free 30-minute streamed playtest.</p>
-            <form class="modal-form" id="stream-form">
+            <form class="modal-form" id="stream-form" action="https://formspree.io/f/mjgknazz" method="POST">
                 <div class="form-group">
-                    <label for="stream-game-name">Game Name</label>
-                    <input type="text" id="stream-game-name" name="gameName" required>
-                </div>
-                <div class="form-group">
-                    <label for="stream-game-link">Steam Key or Game Link</label>
-                    <input type="text" id="stream-game-link" name="gameLink" required>
+                    <label for="stream-name">Your Name</label>
+                    <input type="text" id="stream-name" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="stream-email">Your Email</label>
                     <input type="email" id="stream-email" name="email" required>
                 </div>
-                <button type="submit" class="cta-button-solid">SUBMIT REQUEST</button>
+                <div class="form-group">
+                    <label for="stream-game-name">Game Name</label>
+                    <input type="text" id="stream-game-name" name="gameName" required>
+                </div>
+                <div class="form-group">
+                    <label for="stream-game-link">Link to Game</label>
+                    <input type="text" id="stream-game-link" name="gameLink" required>
+                </div>
+                <div class="form-group">
+                    <label for="stream-instructions">Any special steam key or invite code needed? Or other instructions to launch your game.</label>
+                    <textarea id="stream-instructions" name="instructions" rows="3"></textarea>
+                </div>
+                <button type="submit" class="cta-button-solid">SUBMIT</button>
             </form>
         </div>
     </div>
@@ -176,8 +184,16 @@
         <div class="modal-content">
             <button class="modal-close" aria-label="Close modal">&times;</button>
             <h3>Book Private Playtest</h3>
-            <p>Ready to get high-quality, private feedback on your game? Fill out the form below to start the booking process.</p>
-            <form class="modal-form" id="book-form">
+            <p>Ready to get high-quality, private feedback on your game? Fill out the form below to start the process.</p>
+            <form class="modal-form" id="book-form" action="https://formspree.io/f/xaqnrpkg" method="POST">
+                <div class="form-group">
+                    <label for="book-name">Your Name</label>
+                    <input type="text" id="book-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-email">Your Email</label>
+                    <input type="email" id="book-email" name="email" required>
+                </div>
                 <div class="form-group">
                     <label for="book-game-name">Game Name</label>
                     <input type="text" id="book-game-name" name="gameName" required>
@@ -188,25 +204,22 @@
                         <option value="">Select a genre...</option>
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
-                        <option value="rpg">RPG</option>
-                        <option value="strategy">Strategy</option>
-                        <option value="simulation">Simulation</option>
+                        <option value="fps">FPS</option>
+                        <option value="horror">Horror</option>
                         <option value="puzzle">Puzzle</option>
                         <option value="platformer">Platformer</option>
-                        <option value="horror">Horror</option>
                         <option value="roguelike">Roguelike</option>
+                        <option value="rpg">RPG</option>
+                        <option value="simulation">Simulation</option>
+                        <option value="strategy">Strategy</option>
                         <option value="other">Other</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="book-email">Your Email</label>
-                    <input type="email" id="book-email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="book-notes">Additional Notes (Optional)</label>
                     <textarea id="book-notes" name="notes" rows="3"></textarea>
                 </div>
-                <button type="submit" class="cta-button-solid">PROCEED TO PAYMENT ($20)</button>
+                <button type="submit" class="cta-button-solid">BOOK</button>
             </form>
         </div>
     </div>
@@ -218,7 +231,7 @@
             <button class="modal-close" aria-label="Close modal">&times;</button>
             <h3>Apply to Become a Tester</h3>
             <p>Love playing indie games and want to get paid for it? Tell us about yourself!</p>
-            <form class="modal-form" id="tester-form">
+            <form class="modal-form" id="tester-form" action="https://formspree.io/f/mlgdqpkr" method="POST">
                 <div class="form-group">
                     <label for="tester-name">Your Name</label>
                     <input type="text" id="tester-name" name="name" required>
@@ -230,10 +243,6 @@
                 <div class="form-group">
                     <label for="tester-genres">Favorite Genres</label>
                     <input type="text" id="tester-genres" name="genres" placeholder="e.g., RPG, Platformer, Horror" required>
-                </div>
-                <div class="form-group">
-                    <label for="tester-platforms">Gaming Platforms You Own</label>
-                    <input type="text" id="tester-platforms" name="platforms" placeholder="e.g., PC, PlayStation, Nintendo Switch" required>
                 </div>
                 <button type="submit" class="cta-button-solid">SUBMIT APPLICATION</button>
             </form>
